@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Test {
     public static void main(String[] args) {
-        insertUser();
+        deleteUser();
     }
 
     private static void getUser() {
@@ -43,6 +43,13 @@ public class Test {
         User user = new User("香香", "856269", "xx@193.com", "2018-12-30");
         user.setId(11);
         int result = session.update("updateUser", user);
+        session.commit();
+        System.out.println(result);
+        session.close();
+    }
+    private static void deleteUser() {
+        SqlSession session = getSession();
+        int result = session.delete("deleteUser", 9);
         session.commit();
         System.out.println(result);
         session.close();

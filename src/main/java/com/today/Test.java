@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Test {
     public static void main(String[] args) {
-        updateUser();
+        insertUser();
     }
 
     private static void getUser() {
@@ -31,17 +31,17 @@ public class Test {
 
     private static void insertUser() {
         SqlSession session = getSession();
-        User user = new User("颜岗", "123456", "yg@163.com", "2018-12-29");
+        User user = new User("曹操", "458741", "cc@163.com", "2018-12-30");
         int result = session.insert("insertUser", user);
         session.commit();
-        System.out.println(result);
+        System.out.println(user.getId());
         session.close();
     }
 
     private static void updateUser() {
         SqlSession session = getSession();
-        User user = new User("小弟", "321654", "xd@193.com", "2018-12-30");
-        user.setId(12);
+        User user = new User("香香", "856269", "xx@193.com", "2018-12-30");
+        user.setId(11);
         int result = session.update("updateUser", user);
         session.commit();
         System.out.println(result);

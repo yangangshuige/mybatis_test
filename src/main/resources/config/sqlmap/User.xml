@@ -15,10 +15,23 @@
         from USER
         where username like '%${value}%'
     </select>
-    <select id="insertUser" parameterType="com.today.bean.User" resultType="int">
-       insert into user(username,password,email,create_time) values(#{username},#{password},#{email},#{create_time})
-    </select>
-    <select id="updateUser" parameterType="com.today.bean.User" resultType="int">
-       update  user set username=#{username}, password=#{password}, email=#{email}, create_time=#{create_time} where id=#{id}
-    </select>
+    <insert id="insertUser" parameterType="com.today.bean.User">
+        <selectKey keyProperty="id" order="AFTER" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into user(username,password,email,create_time) values(#{username},#{password},#{email},#{create_time})
+        <!--非自增主键-->
+        <!--<selectKey  keyProperty="id" order="BEFORE" resultType="java.lang.String">-->
+        <!--select uuid()-->
+        <!--</selectKey>-->
+        <!--insert into user(id,username,password,email,create_time) values(#{id},#{username},#{password},#{email},#{create_time})-->
+    </insert>
+    <update id="updateUser" parameterType="com.today.bean.User">
+        update user
+        set username=#{username},
+            password=#{password},
+            email=#{email},
+            create_time=#{create_time}
+        where id = #{id}
+    </update>
 </mapper>

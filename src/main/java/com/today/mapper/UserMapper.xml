@@ -4,18 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.today.mapper.UserMapper">
     <!--#{}表示一个占位符-->
-    <select id="findUserById" parameterType="int" resultType="com.today.bean.User">
+    <select id="findUserById" parameterType="int" resultType="com.today.po.User">
         select *
         from USER
         where id = #{id}
     </select>
     <!--${}表示一个拼接符-->
-    <select id="findUserByName" parameterType="String" resultType="com.today.bean.User">
+    <select id="findUserByName" parameterType="String" resultType="user">
         select *
         from USER
         where username like '%${value}%'
     </select>
-    <insert id="insertUser" parameterType="com.today.bean.User">
+    <insert id="insertUser" parameterType="com.today.po.User">
         <selectKey keyProperty="id" order="AFTER" resultType="int">
             select LAST_INSERT_ID()
         </selectKey>
@@ -26,7 +26,7 @@
         <!--</selectKey>-->
         <!--insert into user(id,username,password,email,create_time) values(#{id},#{username},#{password},#{email},#{create_time})-->
     </insert>
-    <update id="updateUser" parameterType="com.today.bean.User">
+    <update id="updateUser" parameterType="com.today.po.User">
         update user
         set username=#{username},
             password=#{password},
@@ -39,4 +39,10 @@
         from user
         where id = #{id}
     </delete>
+    <select id="findUsers" parameterType="UserQueryVo" resultType="UserCustom">
+        select * from user where id=#{userCustom.id} and username like '%${userCustom.username}%'
+    </select>
+    <select id="findUsersCount" parameterType="UserQueryVo" resultType="int">
+        select count(*) from user where  username like '%${userCustom.username}%'
+    </select>
 </mapper>

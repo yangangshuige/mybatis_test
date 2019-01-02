@@ -1,6 +1,8 @@
 package com.today.mapper;
 
-import com.today.bean.User;
+import com.today.po.User;
+import com.today.po.UserCustom;
+import com.today.po.UserQueryVo;
 
 import java.util.List;
 
@@ -13,4 +15,6 @@ public interface UserMapper {
     public void insertUser(User user) throws  Exception;
     public void deleteUser(int id) throws  Exception;
     public void updateUser(User user) throws  Exception;
+    public UserCustom findUsers(UserQueryVo userQueryVo) throws  Exception;
+    public int findUsersCount(UserQueryVo userQueryVo) throws  Exception;
 }

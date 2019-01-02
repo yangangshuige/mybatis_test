@@ -1,6 +1,6 @@
 package com.today.dao;
 
-import com.today.bean.User;
+import com.today.po.User;
 /**
  * 原始Dao开发方法
  */

@@ -1,7 +1,9 @@
 package com.today;
 
-import com.today.bean.User;
+import com.today.po.User;
 import com.today.mapper.UserMapper;
+import com.today.po.UserCustom;
+import com.today.po.UserQueryVo;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -28,7 +30,9 @@ public class MapperTest {
 //        deleteUser();
 //        insertUser();
 //        getUser();
-        getUsers();
+//        getUsers();
+//        findUsers();
+        findUserCount();
     }
 
     private static void getUser() throws Exception {
@@ -70,6 +74,32 @@ public class MapperTest {
         SqlSession session = sqlSessionFactory.openSession();
         UserMapper userMapper=session.getMapper(UserMapper.class);
         userMapper.deleteUser(7);
+        session.commit();
+        session.close();
+    }
+    private static void findUsers() throws Exception {
+        SqlSession session = sqlSessionFactory.openSession();
+        UserMapper userMapper=session.getMapper(UserMapper.class);
+        UserQueryVo userQueryVo=new UserQueryVo();
+        UserCustom userCustom=new UserCustom();
+        userCustom.setId(10);
+        userCustom.setUsername("小");
+        userQueryVo.setUserCustom((userCustom));
+        UserCustom result= userMapper.findUsers(userQueryVo);
+        System.out.println(result.toString());
+        session.commit();
+        session.close();
+    }
+    private static void findUserCount() throws Exception {
+        SqlSession session = sqlSessionFactory.openSession();
+        UserMapper userMapper=session.getMapper(UserMapper.class);
+        UserQueryVo userQueryVo=new UserQueryVo();
+        UserCustom userCustom=new UserCustom();
+        userCustom.setId(10);
+        userCustom.setUsername("小");
+        userQueryVo.setUserCustom((userCustom));
+        int result= userMapper.findUsersCount(userQueryVo);
+        System.out.println(result);
         session.commit();
         session.close();
     }

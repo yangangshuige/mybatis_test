@@ -1,6 +1,6 @@
 package com.today;
 
-import com.today.bean.User;
+import com.today.po.User;
 import com.today.dao.UserDaoImpl;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;

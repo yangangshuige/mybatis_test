@@ -1,4 +1,4 @@
-package com.today.bean;
+package com.today.po;
 
 public class User {
     private String username;

@@ -1,6 +1,6 @@
 package com.today.dao;
 
-import com.today.bean.User;
+import com.today.po.User;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 

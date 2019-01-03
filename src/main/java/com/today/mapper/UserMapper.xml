@@ -45,4 +45,52 @@
     <select id="findUsersCount" parameterType="UserQueryVo" resultType="int">
         select count(*) from user where  username like '%${userCustom.username}%'
     </select>
+    <!--定义resultMap 将select id id_ ,username username_ from user和User类中的属性作一个映射关系
+    type:resultMap最终映射的java对象类型，可以使用别名
+    id:对resultMap的唯一标识-->
+    <resultMap id="userResultMap" type="user">
+        <!--column:查询出来的列名-->
+        <!--property:type指定pojo类的属性名-->
+        <id column="id_" property="id"/>
+        <result column="username_" property="username"/>
+    </resultMap>
+    <select id="findUserByResultMap" parameterType="int" resultMap="userResultMap">
+        select id id_ ,username username_ from user where id=#{id}
+    </select>
+    <!--用户信息综合查询-->
+    <!--where 自动去掉条件中的第一个and-->
+    <select id="findUsersList" parameterType="UserQueryVo" resultType="user">
+        select * from user
+        <where>
+            <include refid="query_user_where"></include>
+        </where>
+    </select>
+    <!--id:sql唯一标识  引用sql片段-->
+    <!--collection:指定输入对象中集合属性名-->
+    <!--item:每个遍历生成对象-->
+    <!--open:开始遍历时拼接的串-->
+    <!--close:结束遍历时拼接的串-->
+    <!--separator:遍历的两个对象中需要拼接的串-->
+    <sql id="query_user_where">
+        <if test="userCustom!=null">
+            <if test="userCustom.sex!=null and userCustom.sex!=''">
+                and sex=#{userCustom.sex}
+            </if>
+            <if test="userCustom.username!=null and userCustom.username!=''">
+                and username like '%${userCustom.username}%'
+            </if>
+
+        </if>
+        <if test="ids!=null">
+            <foreach collection="ids" item="user_id" open="and(" close=")" separator="or">
+                id=#{user_id}
+            </foreach>
+        </if>
+    </sql>
+    <select id="findUsersCount2" parameterType="UserQueryVo" resultType="int">
+        select count(*) from user
+        <where>
+            <include refid="query_user_where"></include>
+        </where>
+    </select>
 </mapper>

@@ -6,6 +6,15 @@ public class User {
     private String email;
     private String create_time;
     private int id;
+    private int sex;
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
 
     public int getId() {
         return id;

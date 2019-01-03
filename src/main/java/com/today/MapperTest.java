@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapperTest {
@@ -32,13 +33,22 @@ public class MapperTest {
 //        getUser();
 //        getUsers();
 //        findUsers();
-        findUserCount();
+//        findUserCount();
+//        findUserByResultMap();
+        findUserCount2();
     }
 
     private static void getUser() throws Exception {
         SqlSession session = sqlSessionFactory.openSession();
         UserMapper userMapper=session.getMapper(UserMapper.class);
         User user =userMapper.findUserById(10);
+        System.out.println(user.toString());
+        session.close();
+    }
+    private static void findUserByResultMap() throws Exception {
+        SqlSession session = sqlSessionFactory.openSession();
+        UserMapper userMapper=session.getMapper(UserMapper.class);
+        User user =userMapper.findUserByResultMap(10);
         System.out.println(user.toString());
         session.close();
     }
@@ -100,6 +110,44 @@ public class MapperTest {
         userQueryVo.setUserCustom((userCustom));
         int result= userMapper.findUsersCount(userQueryVo);
         System.out.println(result);
+        session.commit();
+        session.close();
+    }
+    private static void findUserList() throws Exception {
+        SqlSession session = sqlSessionFactory.openSession();
+        UserMapper userMapper=session.getMapper(UserMapper.class);
+        UserQueryVo userQueryVo=new UserQueryVo();
+        UserCustom userCustom=new UserCustom();
+        userCustom.setUsername("小");
+        userCustom.setId(10);
+        userCustom.setSex(1);
+        userQueryVo.setUserCustom((userCustom));
+        List<Integer>ids=new ArrayList<Integer>();
+        ids.add(10);
+        ids.add(11);
+        ids.add(12);
+        userQueryVo.setIds(ids);
+        List<User>user= userMapper.findUsersList(userQueryVo);
+        System.out.println("user.size="+user.size());
+        session.commit();
+        session.close();
+    }
+    private static void findUserCount2() throws Exception {
+        SqlSession session = sqlSessionFactory.openSession();
+        UserMapper userMapper=session.getMapper(UserMapper.class);
+        UserQueryVo userQueryVo=new UserQueryVo();
+        UserCustom userCustom=new UserCustom();
+        userCustom.setUsername("小");
+        userCustom.setId(10);
+        userCustom.setSex(1);
+        userQueryVo.setUserCustom((userCustom));
+        List<Integer>ids=new ArrayList<Integer>();
+        ids.add(10);
+        ids.add(11);
+        ids.add(12);
+        userQueryVo.setIds(ids);
+        int result= userMapper.findUsersCount2(userQueryVo);
+        System.out.println("result="+result);
         session.commit();
         session.close();
     }
